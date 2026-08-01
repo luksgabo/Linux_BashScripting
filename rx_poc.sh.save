@@ -1,0 +1,3 @@
+#! /bin/bash
+city_name='Casablanca'
+weather_report=$(curl 'wttr.in/

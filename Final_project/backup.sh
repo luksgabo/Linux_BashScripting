@@ -41,7 +41,7 @@ origAbsPath=$(pwd)
 
 # [TASK 6]
 cd "$destinationDirectory" || exit # <- moving to destination dir
-destDirAbsPath=$(pwd) # getting absolute path there
+destAbsPath=$(pwd) # getting absolute path there
 
 # [TASK 7]
 cd "$origAbsPath" # <- back to original working dir
@@ -65,9 +65,8 @@ done
 echo "${toBackup[@]}"
 
 # [TASK 12]
-zip -vr "$backupFileName" "${toBackup[@]}"
-# r: recurse into directories when backing up files
+tar -czvf  "$backupFileName" "${toBackup[@]}"
 
 # [TASK 13]
-mv "$backupFileName" "$destDirAbsPath/$backupFileName"
+mv "$backupFileName" "$destAbsPath/$backupFileName"
 # Congratulations! You completed the final project for this course!
