@@ -27,7 +27,7 @@ echo "destination directory: $destinationDirectory"
 currentTS=$(date +%s)
 
 # [TASK 4]
-backupFileName="backup-$currentTS.zip"
+backupFileName="backup-$currentTS.tar.gz"
 
 # We're going to:
   # 1: Go into the target directory
@@ -65,7 +65,7 @@ done
 echo "${toBackup[@]}"
 
 # [TASK 12]
-zip -cvzr "$backupFileName" "${toBackup[@]}"
+zip -vr "$backupFileName" "${toBackup[@]}"
 # r: recurse into directories when backing up files
 
 # [TASK 13]
