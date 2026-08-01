@@ -20,14 +20,14 @@ targetDirectory=$1
 destinationDirectory=$2
 
 # [TASK 2]
-echo "$targetDirectory"
-echo "$destinationDirectory"
+echo "target directory: $targetDirectory"
+echo "destination directory: $destinationDirectory"
 
 # [TASK 3]
 currentTS=$(date +%s)
 
 # [TASK 4]
-backupFileName="backup-[$currentTS].tar.gz"
+backupFileName="backup-$currentTS.zip"
 
 # We're going to:
   # 1: Go into the target directory
@@ -40,12 +40,12 @@ backupFileName="backup-[$currentTS].tar.gz"
 origAbsPath=$(pwd)
 
 # [TASK 6]
-cd $destinationDirectory || exit # <- moving to destination dir
+cd "$destinationDirectory" || exit # <- moving to destination dir
 destDirAbsPath=$(pwd) # getting absolute path there
 
 # [TASK 7]
-cd $origAbsPath # <- back to original working dir
-cd $targetDirectory || exit # <- moving to target dir 
+cd "$origAbsPath" # <- back to original working dir
+cd "$targetDirectory" || exit # <- moving to target dir 
 
 # [TASK 8]
 yesterdayTS=$(($currentTS - 24*60*60)) # timestamp 24h*60min*60s back in time
@@ -55,17 +55,19 @@ declare -a toBackup # array variable
 for file in * # [TASK 9]
 do
   # [TASK 10]
-  file_last_modified_date=$(date -r $file +%s)
-  if [[ $file_last_modified_date > $yesterdayTS]]
+  file_last_modified_date=$(date -r "$file" +%s)
+  if [[ $file_last_modified_date -gt $yesterdayTS ]]
   then
     # [TASK 11]
-    toBackup+=($file)
+    toBackup+=("$file")
   fi
 done
+echo "${toBackup[@]}"
 
 # [TASK 12]
-zip -cvzf $backupFileName ${toBackup[@]}
-# c: add comments to archive, f: updates an existing entry, v: verbose, z: include comment for the archive
+zip -cvzr "$backupFileName" "${toBackup[@]}"
+# r: recurse into directories when backing up files
+
 # [TASK 13]
-mv $backupFileName $destAbsPath
+mv "$backupFileName" "$destDirAbsPath/$backupFileName"
 # Congratulations! You completed the final project for this course!
